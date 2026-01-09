@@ -1,0 +1,17 @@
+{
+  "name": "school-exam-system",
+  "version": "1.0.0",
+  "description": "D2 Prototype for School Exam System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.18.2",
+    "express-validator": "^6.14.0",
+    "mysql2": "^3.0.0"
+  }
+}
