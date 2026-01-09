@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Staff Dashboard</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f6f8; margin: 0; }
+    /* Navbar Styles */
+    .navbar { background: #343a40; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; }
+    .nav-links a { color: #ddd; text-decoration: none; margin-left: 20px; font-weight: 500; }
+    .nav-links a:hover, .nav-links a.active { color: white; border-bottom: 2px solid #2c7be5; }
+    .logout { background: #dc3545; padding: 5px 10px; border-radius: 4px; }
+    
+    .container { max-width: 1100px; margin: 30px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background: #f1f3f5; }
+    .btn { padding: 6px 10px; border-radius: 4px; text-decoration: none; color: white; font-size: 0.9rem; margin-right: 5px; border: none; cursor: pointer; }
+    .btn-blue { background: #007bff; } .btn-orange { background: #ffc107; color: black; } .btn-red { background: #dc3545; }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div style="font-size: 1.2rem; font-weight: bold;">Exam System</div>
+    <div class="nav-links">
+      <a href="/staff-dashboard" class="active">Student List</a>
+      <a href="/add-student">Add Student</a>
+      <a href="/manage-exams">Manage Exams</a>
+      <a href="/logout" class="logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Registered Students</h2>
+      <a href="/add-student" class="btn btn-blue" style="padding: 10px 15px;">+ Register New Student</a>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Name</th>
+          <th>Class</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(allStudents.length > 0) { %>
+          <% allStudents.forEach(s => { %>
+            <tr>
+              <td><%= s.roll_no %></td>
+              <td><%= s.student_name %></td>
+              <td><%= s.class_name %>-<%= s.section %></td>
+              <td>
+                <a href="/edit-student/<%= s.student_id %>" class="btn btn-blue">Edit</a>
+                <a href="/manage-marks/<%= s.student_id %>" class="btn btn-orange">Marks</a>
+                <form action="/delete-student/<%= s.student_id %>" method="POST" style="display:inline;" onsubmit="return confirm('Delete this student?');">
+                  <button type="submit" class="btn btn-red">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="4" style="text-align:center;">No students registered yet.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

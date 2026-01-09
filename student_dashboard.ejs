@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Student Portal</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f2f5; padding: 40px; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background: #2c7be5; color: white; }
+    .grade-A { color: green; font-weight: bold; }
+    .grade-F { color: red; font-weight: bold; }
+    .logout { display: inline-block; background: #dc3545; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; float: right; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/logout" class="logout">Logout</a>
+    <h1>Welcome, <%= student.student_name %></h1>
+    <p><strong>Roll No:</strong> <%= student.roll_no %> | <strong>Class:</strong> <%= student.class_name %>-<%= student.section %></p>
+    
+    <h2>Result Card</h2>
+    <% if(results.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Exam Name</th>
+            <th>Subject</th>
+            <th>Marks Obtained</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% results.forEach(r => { %>
+            <tr>
+              <td><%= r.exam_name %></td>
+              <td><%= r.subject_name %></td>
+              <td><%= r.marks_obtained %></td>
+              <td class="grade-<%= r.grade %>"><%= r.grade %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p>No results found yet.</p>
+    <% } %>
+  </div>
+</body>
+</html>

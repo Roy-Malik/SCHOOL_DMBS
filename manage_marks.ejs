@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Manage Marks</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #f4f6f8; }
+    .container { max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    td { padding: 10px; border-bottom: 1px solid #eee; }
+    .btn-save { padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Manage Marks for: <%= student.student_name %></h2>
+    <p>Roll No: <%= student.roll_no %> | Class: <%= student.class_name %>-<%= student.section %></p>
+    <a href="/staff-dashboard">Back to Dashboard</a>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Exam</th>
+          <th>Subject</th>
+          <th>Marks (0-100)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% marksData.forEach(m => { %>
+          <tr>
+            <form action="/save-mark" method="POST">
+              <input type="hidden" name="student_id" value="<%= student.student_id %>">
+              <input type="hidden" name="schedule_id" value="<%= m.schedule_id %>">
+              <input type="hidden" name="mark_id" value="<%= m.mark_id || '' %>">
+              
+              <td><%= m.exam_name %></td>
+              <td><%= m.subject_name %></td>
+              <td>
+                <input type="number" name="marks_obtained" step="0.01" min="0" max="100" value="<%= m.marks_obtained || '' %>" required style="width: 80px;">
+              </td>
+              <td>
+                <button class="btn-save"><%= m.mark_id ? 'Update' : 'Add' %></button>
+              </td>
+            </form>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% if(marksData.length === 0) { %>
+      <p>No exams scheduled for this class yet.</p>
+    <% } %>
+  </div>
+</body>
+</html>
